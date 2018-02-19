@@ -2,7 +2,6 @@
 
 namespace alexeevdv\mailer;
 
-use yii\base\NotSupportedException;
 use yii\mail\BaseMessage;
 
 /**
@@ -188,6 +187,7 @@ class ChainMailerMessage extends BaseMessage
         foreach ($this->messages as $message) {
             $message->setSubject($subject);
         }
+        return $this;
     }
 
     /**
@@ -218,7 +218,7 @@ class ChainMailerMessage extends BaseMessage
     public function attach($fileName, array $options = [])
     {
         foreach ($this->messages as $message) {
-            return $message->attach($fileName, $options);
+            $message->attach($fileName, $options);
         }
         return $this;
     }
@@ -229,7 +229,7 @@ class ChainMailerMessage extends BaseMessage
     public function attachContent($content, array $options = [])
     {
         foreach ($this->messages as $message) {
-            return $message->attachContent($content, $options);
+            $message->attachContent($content, $options);
         }
         return $this;
     }
@@ -273,6 +273,6 @@ class ChainMailerMessage extends BaseMessage
      */
     public function toString()
     {
-        throw new NotSupportedException('This message should no be used directly!');
+        return '';
     }
 }

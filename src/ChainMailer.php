@@ -3,6 +3,7 @@
 namespace alexeevdv\mailer;
 
 use Yii;
+use yii\helpers\ArrayHelper;
 use yii\mail\BaseMailer;
 use yii\mail\BaseMessage;
 
@@ -32,7 +33,16 @@ class ChainMailer extends BaseMailer
         $message = parent::compose($view, $params);
         foreach ($this->mailers as $config) {
             /** @var BaseMailer $mailer */
-            $mailer = Yii::createObject($config);
+            $mailer = Yii::createObject(ArrayHelper::merge(
+                $config,
+                [
+                    'htmlLayout' => $this->htmlLayout,
+                    'textLayout' => $this->textLayout,
+                    'messageConfig' => $this->messageConfig,
+                    'view' => $this->view,
+                    'viewPath' => $this->viewPath,
+                ]
+            ));
             $message->messages[] = $mailer->compose($view, $params);
         }
         return $message;
