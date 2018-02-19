@@ -24,6 +24,7 @@ class ChainMailerTest extends \Codeception\Test\Unit
     public function testSend()
     {
         $mailer = new ChainMailer([
+            'viewPath' => '/dev/null',
             'mailers' => [
                 [
                     'class' => DummyMailer::class,
@@ -44,7 +45,8 @@ class ChainMailerTest extends \Codeception\Test\Unit
             'Dummy message should be sent'
         );
 
-        $return = $mailer->send(new DummyMessage);
+        $message = new DummyMessage(['mailer' => new DummyMailer]);
+        $return = $mailer->send($message);
         $this->tester->assertTrue($return, 'Dummy message should be sent');
     }
 

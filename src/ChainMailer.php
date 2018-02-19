@@ -27,32 +27,37 @@ class ChainMailer extends BaseMailer
     /**
      * @inheritdoc
      */
-    public $useFileTransport = null;
+    public $useFileTransport;
 
     /**
      * @inheritdoc
      */
-    public $htmlLayout = null;
+    public $htmlLayout;
 
     /**
      * @inheritdoc
      */
-    public $textLayout = null;
+    public $textLayout;
 
     /**
      * @inheritdoc
      */
-    public $messageConfig = null;
+    public $messageConfig;
 
     /**
      * @inheritdoc
      */
-    public $fileTransportPath = null;
+    public $fileTransportPath;
 
     /**
      * @inheritdoc
      */
-    public $fileTransportCallback = null;
+    public $fileTransportCallback;
+
+    /**
+     * @inheritdoc
+     */
+    public $_viewPath;
 
     /**
      * @inheritdoc
@@ -70,6 +75,7 @@ class ChainMailer extends BaseMailer
             $mailer = Yii::createObject(ArrayHelper::merge(
                 $config,
                 array_filter([
+                    'viewPath' => $this->getViewPath(),
                     'useFileTransport' => $this->useFileTransport,
                     'fileTransportPath' => $this->fileTransportPath,
                     'fileTransportCallback' => $this->fileTransportCallback,
@@ -119,5 +125,21 @@ class ChainMailer extends BaseMailer
         $this->afterSend($message, $isSuccessful);
 
         return $isSuccessful;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getViewPath()
+    {
+        return $this->_viewPath;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function setViewPath($path)
+    {
+        $this->_viewPath = Yii::getAlias($path);
     }
 }
