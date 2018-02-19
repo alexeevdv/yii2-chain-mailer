@@ -3,7 +3,9 @@
 namespace tests\unit;
 
 use alexeevdv\mailer\ChainMailer;
-use Yii;
+use tests\DummyMailer;
+use tests\DummyMessage;
+use yii\mail\MailEvent;
 
 /**
  * Class ChainMailerTest
@@ -21,24 +23,60 @@ class ChainMailerTest extends \Codeception\Test\Unit
      */
     public function testSend()
     {
-        Yii::setAlias('@app/mail', '/dev/null');
-
         $mailer = new ChainMailer([
             'mailers' => [
                 [
-                    'class' => ChainMailer::class,
+                    'class' => DummyMailer::class,
                 ],
             ],
         ]);
 
         $return = $mailer
-            ->compose(null)
+            ->compose()
+            ->setTo([
+                'mail@example.org' => 'John Doe'
+            ])
+            ->send();
+
+        $this->tester->assertEquals(
+            true,
+            $return,
+            'Dummy message should be sent'
+        );
+
+        $return = $mailer->send(new DummyMessage);
+        $this->tester->assertTrue($return, 'Dummy message should be sent');
+    }
+
+    /**
+     * @test
+     */
+    public function testFailedBeforeSend()
+    {
+        $mailer = new ChainMailer([
+            'mailers' => [
+                [
+                    'class' => DummyMailer::class,
+                ],
+            ],
+        ]);
+
+        $mailer->on(ChainMailer::EVENT_BEFORE_SEND, function (MailEvent $event) {
+            $event->isValid = false;
+        });
+
+        $return = $mailer
+            ->compose()
+            ->setTo([
+                'mail@example.org' => 'John Doe'
+            ])
             ->send();
 
         $this->tester->assertEquals(
             false,
             $return,
-            'No actual email is sent in this case'
+            'Dummy message should not be sent because of beforeSend event'
         );
     }
+
 }
