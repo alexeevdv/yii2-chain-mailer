@@ -17,13 +17,13 @@ The preferred way to install this extension is through [composer](https://getcom
 Either run
 
 ```bash
-$ php composer.phar require alexeevdv/yii2-chain-mailer "~1.0"
+$ php composer.phar require alexeevdv/yii2-chain-mailer "~2.0"
 ```
 
 or add
 
 ```
-"alexeevdv/yii2-chain-mailer": "~1.0"
+"alexeevdv/yii2-chain-mailer": "~2.0"
 ```
 
 to the ```require``` section of your `composer.json` file.
@@ -36,14 +36,14 @@ to the ```require``` section of your `composer.json` file.
 'components' => [
     //...
     'mailer' => [
-        'class' => \alexeevdv\mailer\ChainMailer::class,
+        'class' => \alexeevdv\yii\ChainMailer::class,
         'mailers' => [
             [
                 'class' => \yii\swiftmailer\Mailer::class,
                 'userFileTransport' => true,
             ],
             [
-                'class' => \alexeevdv\mailer\SlackMailer::class,
+                'class' => \alexeevdv\yii\SlackMailer::class,
                 'webhook' => 'https://web.hook',
             ],
             // even more mailers here

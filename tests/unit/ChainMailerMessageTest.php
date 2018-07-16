@@ -2,7 +2,7 @@
 
 namespace tests\unit;
 
-use alexeevdv\mailer\ChainMailerMessage;
+use alexeevdv\yii\ChainMailerMessage;
 use Codeception\Stub;
 
 /**

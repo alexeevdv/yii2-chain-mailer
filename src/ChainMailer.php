@@ -1,6 +1,6 @@
 <?php
 
-namespace alexeevdv\mailer;
+namespace alexeevdv\yii;
 
 use Yii;
 use yii\helpers\ArrayHelper;
@@ -9,7 +9,7 @@ use yii\mail\BaseMessage;
 
 /**
  * Class ChainMailer
- * @package alexeevdv\mailer
+ * @package alexeevdv\yii
  */
 class ChainMailer extends BaseMailer
 {

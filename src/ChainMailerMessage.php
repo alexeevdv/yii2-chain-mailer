@@ -1,12 +1,12 @@
 <?php
 
-namespace alexeevdv\mailer;
+namespace alexeevdv\yii;
 
 use yii\mail\BaseMessage;
 
 /**
  * Class ChainMailerMessage
- * @package alexeevdv\mailer
+ * @package alexeevdv\yii
  */
 class ChainMailerMessage extends BaseMessage
 {

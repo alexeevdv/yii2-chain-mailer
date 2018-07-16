@@ -2,7 +2,7 @@
 
 namespace tests\unit;
 
-use alexeevdv\mailer\ChainMailer;
+use alexeevdv\yii\ChainMailer;
 use tests\DummyMailer;
 use tests\DummyMessage;
 use yii\mail\MailEvent;
