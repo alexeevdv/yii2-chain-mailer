@@ -286,7 +286,7 @@ class ChainMailerMessageTest extends \Codeception\Test\Unit
     /**
      * @test
      */
-    public function toString()
+    public function testToString()
     {
         $message = new ChainMailerMessage([
             'messages' => [
